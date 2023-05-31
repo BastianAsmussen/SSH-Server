@@ -20,16 +20,15 @@ pacman -Syy --noconfirm
 echo "Installing OpenSSH and Fail2Ban..."
 pacman -S --noconfirm openssh fail2ban
 
+echo "Enabling services..."
 # Enable OpenSSH.
-echo "Enabling OpenSSH..."
 systemctl enable sshd.service
 
 # Enable Fail2Ban.
-echo "Enabling Fail2Ban..."
 systemctl enable fail2ban.service
 
+echo "Configuring OpenSSH and Fail2Ban..."
 # Configure OpenSSH.
-echo "Configuring OpenSSH..."
 # Copy the configuration file to a backup.
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 
@@ -37,20 +36,17 @@ cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 mv ssh/sshd_config /etc/ssh/sshd_config
 
 # Configure Fail2Ban.
-echo "Configuring Fail2Ban..."
 # Copy the configuration file to a backup.
 cp /etc/fail2ban/jail.local /etc/fail2ban/jail.local.bak
 
 # Overwrite the configuration file.
 mv fail2ban/jail.local /etc/fail2ban/jail.local
 
+echo "Restarting services..."
 # Restart OpenSSH.
-echo "Restarting OpenSSH..."
 systemctl restart sshd.service
-
 # Restart Fail2Ban.
-echo "Restarting Fail2Ban..."
 systemctl restart fail2ban.service
 
 # Notify the user that the script has finished.
-echo "Done, please make to port forward port 1024 on your router!"
+echo "Done, please make sure to port forward port 1024 on your router!"
