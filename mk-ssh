@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Make sure we're running on Arch Linux.
+if [ ! -f "/etc/arch-release" ]; then
+    echo "Please run on Arch Linux!"
+    exit 1
+fi
+
+# Make sure we're running as root.
+if [ "$(id -u)" != "0" ]; then
+    echo "Please run as root!"
+    exit 1
+fi
+
+# Update package repositories.
+echo "Updating system..."
+pacman -Syy --noconfirm
+
+# Install OpenSSH and Fail2Ban.
+echo "Installing OpenSSH and Fail2Ban..."
+pacman -S --noconfirm openssh fail2ban
+
+# Enable OpenSSH.
+echo "Enabling OpenSSH..."
+systemctl enable sshd.service
+
+# Enable Fail2Ban.
+echo "Enabling Fail2Ban..."
+systemctl enable fail2ban.service
+
+# Configure OpenSSH.
+echo "Configuring OpenSSH..."
+# Copy the configuration file to a backup.
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+
+# Overwrite the configuration file.
+mv ssh/sshd_config /etc/ssh/sshd_config
+
+# Configure Fail2Ban.
+echo "Configuring Fail2Ban..."
+# Copy the configuration file to a backup.
+cp /etc/fail2ban/jail.local /etc/fail2ban/jail.local.bak
+
+# Overwrite the configuration file.
+mv fail2ban/jail.local /etc/fail2ban/jail.local
+
+# Restart OpenSSH.
+echo "Restarting OpenSSH..."
+systemctl restart sshd.service
+
+# Restart Fail2Ban.
+echo "Restarting Fail2Ban..."
+systemctl restart fail2ban.service
+
+# Notify the user that the script has finished.
+echo "Done, please make to port forward port 1024 on your router!"
