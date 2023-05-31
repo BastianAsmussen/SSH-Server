@@ -1,4 +1,4 @@
-# SSH Server
+# Arch Linux SSH Server
 ## How To Install:
 1. Make sure `git` is installed.
 ```bash
