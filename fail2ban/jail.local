@@ -1,9 +1,10 @@
-[sshd]
-enabled = true
-port = ssh
-filter = sshd
-logpath = /var/log/auth.log
-maxretry = 3
-findtime = 300
-bantime = 3600 # 10 minute ban
-ignoreip = 127.0.0.1
+[sshd] # name of the jail
+enabled = true # set to true to enable fail2ban
+port = ssh # port to monitor
+filter = sshd # filter to use (defined in /etc/fail2ban/filter.d)
+logpath = /var/log/auth.log # path to log file
+maxretry = 3 # number of attempts before ban
+findtime = 300 # 5 minutes in seconds
+bantime = 3600 # 1 hour in seconds
+ignoreip = 127.0.0.1 # ip to ignore
+

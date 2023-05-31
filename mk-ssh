@@ -49,4 +49,4 @@ systemctl restart sshd.service
 systemctl restart fail2ban.service
 
 # Notify the user that the script has finished.
-echo "Done, please make sure to port forward port 1024 on your router!"
+echo "Done, please make sure to port forward port the SSH port on your router!"
